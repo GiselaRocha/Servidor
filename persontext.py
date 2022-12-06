@@ -14,8 +14,8 @@ from keras.utils import pad_sequences
 # Creamos la lista de clases
 clases = ['No','Si']
 
-modelo_personalidad = tf.keras.models.load_model("modeloneuroticismo.h5")
-
+modelo_personalidad_neuroticismo = tf.keras.models.load_model("modeloneuroticismo.h5")
+modelo_personalidad_responsabilidad = tf.keras.models.load_model("modeloresponsabilidad.h5")
 
 def crear_tokenizer():
     f = open('datos_dicc.json')
@@ -26,7 +26,13 @@ def crear_tokenizer():
     return tokenizer
 
 
-def predict_personalidad(texto):
+def predict_personalidad(texto,rasgo):
+
+    if rasgo == "neuroticismo":
+        modelo_personalidad = modelo_personalidad_neuroticismo
+    if rasgo == "responsabilidad" :
+        modelo_personalidad = modelo_personalidad_responsabilidad
+
     tokenizer = crear_tokenizer()
     word_index = tokenizer.word_index
     total_unique_words = len(tokenizer.word_index) + 1 

@@ -30,12 +30,20 @@ def home():
 def resource_not_found(e):
     return jsonify(error=str(e)), 404
 
-@app.route('/persontext/<texto>',methods=["GET","POST"])
+@app.route('/persontext/neuroticismo/<texto>',methods=["GET","POST"])
 @cross_origin() #Para poder atender las peticiones locales
-def persontext(texto):
+def persontext_neuroticismo(texto):
     datos = {}
-    prediccion = predict_personalidad(texto.lower())
+    prediccion = predict_personalidad(texto.lower(),"neuroticismo")
     datos["presenta_neuroticismo"] = prediccion
+    return jsonify(datos)
+
+@app.route('/persontext/responsabilidad/<texto>',methods=["GET","POST"])
+@cross_origin() #Para poder atender las peticiones locales
+def persontext_responsabilidad(texto):
+    datos = {}
+    prediccion = predict_personalidad(texto.lower(),"responsabilidad")
+    datos["presenta_responsabilidad"] = prediccion
     return jsonify(datos)
 
 
